@@ -1,0 +1,52 @@
+\documentclass[sigconf]{acmart}
+
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\pagestyle{plain} % removes running headers
+
+\usepackage{booktabs} % For formal tables
+
+
+\begin{document}
+\title{Car Evaluation Using Machine Learning}
+\subtitle{Applied Machine Learning (I526), Spring 2017}
+\author{Mildred Noronha}
+\affiliation{School of Informatics and Computing, Indiana University Bloomington}
+\email{noronham@iu.edu}
+
+\author{Sharad Ghule}
+\affiliation{School of Informatics and Computing, Indiana University Bloomington}
+\email{ssghule@iu.edu}
+\begin{abstract}
+TODO: Abstract
+\end{abstract}
+\keywords{Machine Learning, Classification, Naive Bayes, Random Forests, Boosting, Accuracy, Prediction}
+\maketitle
+
+\input{introduction}
+\input{problem}
+\input{technicalsolution}
+\input{results}
+\input{conclusion}
+
+%\end{document}  % This is where a 'short' article might terminate
+
+\appendix
+%Appendix A
+\section{Sample Code and Results}
+TODO
+
+
+\section{Acknowledgements}
+ The authors thank Prof. Sriraam Natarajan and Katherine Metcalf for their technical guidance and valued support.
+
+\medskip
+ 
+\begin{thebibliography}{9}
+\bibitem{latexcompanion} 
+Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
+\textit{The \LaTeX\ Companion}. 
+Addison-Wesley, Reading, Massachusetts, 1993.
+\end{thebibliography}
+
+\end{document}
