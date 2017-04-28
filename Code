@@ -124,11 +124,11 @@ def learn_naive_bayes(X, Y):
     
 
 best_naive_bayes = learn_naive_bayes(trainX, trainY);
-print(best_naive_bayes);
+print("Accuracy of the model using Naive Bayes: ",best_naive_bayes[1]);
 naive_bayes_accuracy = best_naive_bayes[0].score(testX, testY);
-print(naive_bayes_accuracy);
+print("Accuracy on test data using Naive Bayes: ",naive_bayes_accuracy);
     
-'''
+
 
 def learn_logistic_regression(X, Y):
     best_model = [ None, float("-inf") ];
@@ -136,14 +136,14 @@ def learn_logistic_regression(X, Y):
     # validation sets
     kf = KFold(n_splits=10);
     #attributes to be selected for training, can be customized for each algorithm
-    col_labels= ["age","fnlwgt","workclass_label","education_num","marital_status_label","occupation_label","relationship_label","race_label","sex_label","capital_gain","capital_loss","hours_per_week","native_country_label"]    #
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]    #
     # Iterate over each of the 10 splits on the data set
     for train, test in kf.split(X):
         # Pull out the records and labels that will be used to train this model     
-        train_X=X.ix[train,col_labels];
-        train_Y=Y.ix[train];
-        valid_X =X.ix[test,col_labels];
-        valid_Y =Y.ix[test];
+        train_X=X.loc[train,col_labels];
+        train_Y=Y.loc[train];
+        valid_X =X.loc[test,col_labels];
+        valid_Y =Y.loc[test]; 
         # Create the regression tree object
         clf = linear_model.LogisticRegression();
         # Learn the model on the training data that will be used for this
@@ -159,19 +159,19 @@ def learn_logistic_regression(X, Y):
     return best_model;
 
 best_logistic_regression = learn_logistic_regression(trainX, trainY);
-print(best_logistic_regression);
+print("\nAccuracy of the model using Logistic Regression: ",best_logistic_regression[1]);
 logistic_regression_accuracy = best_logistic_regression[0].score(testX, testY);
-print(logistic_regression_accuracy);
+print("Accuracy on test data using Logistic Regression: ",logistic_regression_accuracy);
 
 
 def learn_decision_tree(X, Y):
     # This list tracks the learned decision tree with the best accuracy
-    depths = [ 6,6,7,7,8,8,9,9,10,10];
+    depths = [ 2,2,4,4,6,6,8,8,10,10];
     best_model = [ None, 0, float("-inf") ];
     # Create the object that will split the training set into training and
     # validation sets
     kf = KFold(n_splits=10);
-    col_labels= ["age","fnlwgt","workclass_label","education_num","marital_status_label","occupation_label","relationship_label","race_label","sex_label","capital_gain","capital_loss","hours_per_week","native_country_label"]    #
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]    #
     # Iterate over each of the 10 splits on the data set
     for (train, test), cdepth in zip(kf.split(X),depths):
         # Pull out the records and labels that will be used to train this model     
@@ -194,18 +194,18 @@ def learn_decision_tree(X, Y):
     return best_model;
 
 best_decision_tree = learn_decision_tree(trainX, trainY);
-print(best_decision_tree);
+print("\nAccuracy of the model using Decision Trees: ",best_decision_tree[2], "\nOptimum Depth: ",best_decision_tree[1]);
 decision_tree_accuracy = best_decision_tree[0].score(testX, testY);
-print(decision_tree_accuracy);
+print("Accuracy on test data using Decision Trees: ",decision_tree_accuracy);
 
 def learn_knn(X, Y):
     #an array of different k values to be tried on the training set
-    k_values = [ 5,5,6,6,7,7,8,8,9,9];
+    k_values = [ 2,2,4,4,6,6,8,8,10,10];
     best_model = [ None, 0, float("-inf") ];
     # Create the object that will split the training set into training and
     # validation sets
     kf = KFold(n_splits=10);
-    col_labels= ["age","fnlwgt","workclass_label","education_num","marital_status_label","occupation_label","relationship_label","race_label","sex_label","capital_gain","capital_loss","hours_per_week","native_country_label"]    #
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]     #
     # Iterate over each of the 10 splits on the data set
     for (train, test), k in zip(kf.split(X),k_values):
         # Pull out the records and labels that will be used to train this model     
@@ -228,22 +228,20 @@ def learn_knn(X, Y):
     return best_model;
 
 best_knn = learn_knn(trainX, trainY);
-print(best_knn);
+print("\nAccuracy of the model using kNN: ",best_knn[2],"\nBest K value: ",best_knn[1]);
 knn_accuracy = best_knn[0].score(testX, testY);
-print(knn_accuracy);
+print("Accuracy on test data using kNN: ",knn_accuracy);
 
 
 
 def learn_randomForest(X, Y):
-    noOfTrees = [5, 6, 7, 8, 9, 10, 11]
+    noOfTrees = [2,3,4,5, 6, 7, 8]
     best_model = [None, 0, float("-inf"), 0]
-    depth = [10, 12, 14, 16, 18, 20, 22, 24]
+    depth = [4,6,8,10, 12, 14,16]
     # Create the object that will split the training set into training and
     # validation sets
     kf = KFold(n_splits=10);
-    col_labels = ["age", "fnlwgt", "workclass_label", "education_num", "marital_status_label", "occupation_label",
-                  "relationship_label", "race_label", "sex_label", "capital_gain", "capital_loss", "hours_per_week",
-                  "native_country_label"]
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]    
     for(train, test), number, d in zip(kf.split(X), noOfTrees, depth):
         # Pull out the records and labels that will be used to train this model
         train_X = X.ix[train, col_labels]
@@ -260,9 +258,9 @@ def learn_randomForest(X, Y):
     return best_model
 
 best_randomForest = learn_randomForest(trainX, trainY)
-print(best_randomForest)
+print("\nAccuracy of the model using Random Forests: ",best_randomForest[2],"\nOptimum no. of trees: ",best_randomForest[1],"\nOptimum depth: ",best_randomForest[3])
 randomForestAccuracy = best_randomForest[0].score(testX, testY)
-print(randomForestAccuracy)
+print("Accuracy on test data using Random Forests: ",randomForestAccuracy)
 
 def learn_adaboost(X, Y):
     estimator = [50, 60, 70, 80, 90, 100, 110]
@@ -271,9 +269,7 @@ def learn_adaboost(X, Y):
     # Create the object that will split the training set into training and
     # validation sets
     kf = KFold(n_splits=10);
-    col_labels = ["age", "fnlwgt", "workclass_label", "education_num", "marital_status_label", "occupation_label",
-                  "relationship_label", "race_label", "sex_label", "capital_gain", "capital_loss", "hours_per_week",
-                  "native_country_label"]
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]    
     for(train, test), number in zip(kf.split(X), estimator):
         # Pull out the records and labels that will be used to train this model
         train_X = X.ix[train, col_labels]
@@ -290,9 +286,9 @@ def learn_adaboost(X, Y):
     return best_model
 
 best_adaboost = learn_adaboost(trainX, trainY)
-print(best_adaboost)
+print("\nAccuracy of the model using Adaboost: ",best_adaboost[2],"\nBest estimator value: ",best_adaboost[1])
 adaboostAccuracy = best_adaboost[0].score(testX, testY)
-print(adaboostAccuracy)
+print("Accuracy on test data using Adaboost: ",adaboostAccuracy)
 
 def learn_SVM(X, Y):
     #an array of different k values to be tried on the training set
@@ -301,7 +297,7 @@ def learn_SVM(X, Y):
     # Create the object that will split the training set into training and
     # validation sets
     kf = KFold(n_splits=5);
-    col_labels= ["age","fnlwgt","workclass_label","education_num","marital_status_label","occupation_label","relationship_label","race_label","sex_label","capital_gain","capital_loss","hours_per_week","native_country_label"]    #
+    col_labels= ["buying","maint","doors","persons","lug_boot","safety"]      #
     # Iterate over each of the 10 splits on the data set
     for (train, test), k in zip(kf.split(X),k_values):
         # Pull out the records and labels that will be used to train this model     
@@ -324,7 +320,6 @@ def learn_SVM(X, Y):
     return best_model;
 
 best_SVM = learn_SVM(trainX, trainY);
-print(best_SVM);
+print("\nAccuracy of the model using SVM: ",best_SVM[2],"\nBest K value: ",best_SVM[1] );
 SVM_accuracy = best_SVM[0].score(testX, testY);
-print(SVM_accuracy);
-'''
+print("Accuracy on test data using SVM: ",SVM_accuracy);
