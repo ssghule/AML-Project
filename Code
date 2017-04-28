@@ -4,7 +4,7 @@ import pandas as pd;
 from sklearn.model_selection import KFold;
 from sklearn import preprocessing;
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import roc_curve, auc
 from sklearn import tree;
 from sklearn.naive_bayes import GaussianNB;
 from sklearn import linear_model, datasets;
@@ -166,7 +166,7 @@ print("Accuracy on test data using Logistic Regression: ",logistic_regression_ac
 
 def learn_decision_tree(X, Y):
     # This list tracks the learned decision tree with the best accuracy
-    depths = [ 2,2,4,4,6,6,8,8,10,10];
+    depths = [ 6,6,8,8,10,10,12,12,14,14];
     best_model = [ None, 0, float("-inf") ];
     # Create the object that will split the training set into training and
     # validation sets
